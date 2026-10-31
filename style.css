@@ -1782,11 +1782,10 @@ input[type="button"],
 
 .btn-publish .btn-content,
 .btn-publish .btn-loader {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  text-align: center !important;
-  width: 100% !important;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
 }
 a:focus-visible, button:focus-visible, input:focus-visible,
 textarea:focus-visible, select:focus-visible {
