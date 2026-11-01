@@ -273,6 +273,13 @@ document.addEventListener('DOMContentLoaded', () => {
     window.lucide.createIcons();
   }
 
+  // Registro do Service Worker para suporte completo PWA no Android/iOS
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js').catch((err) => {
+      console.warn('Registro do Service Worker:', err);
+    });
+  }
+
   // Atualiza o estado do ícone indicador administrativo se Deletar_TODAS_Declaracoes === 1
   updateAdminIndicator();
 
