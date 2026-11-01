@@ -511,49 +511,66 @@ document.addEventListener('DOMContentLoaded', () => {
       `.faith-card[data-id="${item.id}"]`
     );
 
-    // Se html2canvas disponível e card encontrado, tenta capturar imagem
+    const shareUrl = `${window.location.origin}${window.location.pathname}#card-${item.id}`;
+    const shareText = `🕊️ *Declaração de Fé de ${item.name}*\n\n“${item.declaration}”\n\n📖 Mural Coletivo • Ministério 50+\n👉 Veja o card no mural: ${shareUrl}`;
+
+    // Se html2canvas disponível e card encontrado, tenta capturar imagem sem botões
     if (window.html2canvas && cardEl) {
       showToast('Preparando imagem do card… 🖼️', '⏳');
       try {
+        cardEl.classList.add('capturing-image');
         const canvas = await window.html2canvas(cardEl, {
           scale: 2,
           useCORS: true,
           backgroundColor: null,
           logging: false
         });
+        cardEl.classList.remove('capturing-image');
 
         canvas.toBlob(async (blob) => {
           if (!blob) throw new Error('Falha ao gerar imagem');
 
           const file = new File([blob], 'declaracao-de-fe.png', { type: 'image/png' });
 
-          // Web Share API com arquivo (funciona no celular — abre WhatsApp, etc.)
+          // Web Share API com arquivo e texto/link
           if (navigator.canShare && navigator.canShare({ files: [file] })) {
             try {
-              await navigator.share({ files: [file] });
+              await navigator.share({
+                files: [file],
+                title: 'Declaração de Fé',
+                text: shareText
+              });
               return;
             } catch (err) {
               if (err.name === 'AbortError') return; // Usuário cancelou
             }
           }
 
-          // Fallback desktop: apenas baixa a imagem
+          // Fallback: baixa imagem e abre WhatsApp
           const url = URL.createObjectURL(blob);
           const a = document.createElement('a');
           a.href = url;
           a.download = 'declaracao-de-fe.png';
           a.click();
           URL.revokeObjectURL(url);
-          showToast('Imagem salva! Agora envie pelo WhatsApp 📲', '✅');
+
+          const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
+          window.open(whatsappUrl, '_blank');
+
+          showToast('Imagem salva e WhatsApp aberto com o link! 📲', '✅');
         }, 'image/png');
 
         return;
       } catch (e) {
+        if (cardEl) cardEl.classList.remove('capturing-image');
         console.warn('html2canvas falhou, usando compartilhamento por texto:', e);
       }
     }
 
-    showToast('Não foi possível capturar a imagem do card.', '⚠️');
+    // Fallback sem imagem: WhatsApp com texto e link
+    const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
+    window.open(whatsappUrl, '_blank');
+    showToast('WhatsApp aberto para compartilhamento! 📲', '✅');
   }
 
 
@@ -927,10 +944,17 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Initial render & real-time updates
+  let hasScrolledToHash = false;
   FaithStorage.listenToDeclarations(async (declarations) => {
     renderCards(declarations);
     const stats = await FaithStorage.getStats(declarations);
     if (statDeclarations) statDeclarations.textContent = stats.total_declarations;
     if (statAmens) statAmens.textContent = stats.total_amens;
+
+    if (!hasScrolledToHash && window.location.hash && window.location.hash.startsWith('#card-')) {
+      hasScrolledToHash = true;
+      const targetId = window.location.hash.replace('#card-', '');
+      setTimeout(() => highlightAndScrollToCard(targetId), 400);
+    }
   });
 });

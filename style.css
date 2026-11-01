@@ -2121,3 +2121,7 @@ textarea:focus, .input-with-icon input:focus {
   animation: highlightPulse 1.5s ease-in-out 2;
   border-color: #f59e0b !important;
 }
+
+.faith-card.capturing-image .card-actions-group {
+  display: none !important;
+}
