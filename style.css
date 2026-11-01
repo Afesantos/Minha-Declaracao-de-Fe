@@ -167,9 +167,18 @@ body {
 }
 
 .brand-icon {
-  font-size: 2rem;
-  filter: drop-shadow(0 2px 8px rgba(245, 158, 11, 0.25));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   animation: floatIcon 4s ease-in-out infinite;
+}
+
+.brand-icon svg {
+  width: 2rem;
+  height: 2rem;
+  stroke-width: 2.2px;
+  color: #b9924a;
+  filter: drop-shadow(0 2px 8px rgba(185, 146, 74, 0.25));
 }
 
 @keyframes floatIcon {
