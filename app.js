@@ -37,7 +37,7 @@ function getAuthorTokens() {
 
 function isAuthorId(id) {
   if (!id || id === HABAKKUK_DOC_ID) return false;
-  return true;
+  return Boolean(localStorage.getItem(AUTHOR_PREFIX + id) || getAuthorTokens()[id]);
 }
 
 function saveAuthorToken(id) {
