@@ -2,7 +2,63 @@
 // MINHA DECLARAÇÃO DE FÉ — CLIENT-SIDE JAVASCRIPT
 // =========================================================
 
+const HABAKKUK_DOC_ID = 'habacuque-fixo';
+const HABAKKUK_DECLARATION = {
+  id: HABAKKUK_DOC_ID,
+  name: 'Profeta Habacuque',
+  declaration: 'Ainda que a figueira não floresça, nem haja fruto na vide; ainda que decepcione o produto da oliveira, e os campos não produzam mantimento; ainda que as ovelhas da malhada sejam arrebatadas, e nos currais não haja gado; todavia eu me alegrarei no SENHOR e exultarei no Deus da minha salvação.',
+  color_theme: 'amarelo-suave',
+  rotation: 0,
+  amen_count: 0,
+  is_pinned: 1,
+  created_at: '2026-09-24T18:20:59.000Z'
+};
+
 const AUTHOR_TOKENS_KEY = 'minha_declaracao_de_fe_author_tokens';
+
+// =========================================================
+// VARIÁVEL DE CONTROLE ADMINISTRATIVO (RESET DO MURAL)
+// =========================================================
+// Valor padrão: 0 (não deleta).
+// Quando o logotipo no rodapé é clicado 2 vezes, Deletar_TODAS_Declaracoes torna-se 1.
+// Em seguida, o card que for clicado 2 vezes será excluído e a variável retorna para 0.
+let Deletar_TODAS_Declaracoes = 0;
+
+function updateAdminIndicator() {
+  const icon = document.getElementById('admin-indicator-icon') || document.querySelector('.admin-indicator-icon');
+  if (icon) {
+    icon.style.display = (Deletar_TODAS_Declaracoes === 1) ? 'inline-block' : 'none';
+  }
+}
+
+async function adminDeleteCard(id, isHabakkuk) {
+  if (isHabakkuk || id === HABAKKUK_DOC_ID) {
+    if (typeof showToast === 'function') {
+      showToast('A declaração de Habacuque permanece fixa e não pode ser excluída.', '⚠️');
+    }
+    Deletar_TODAS_Declaracoes = 0;
+    updateAdminIndicator();
+    return;
+  }
+  try {
+    const { db, doc, deleteDoc } = window.FirebaseDB;
+    if (!deleteDoc) return;
+    await deleteDoc(doc(db, "declarations", id));
+    removeAuthorToken(id);
+    console.warn(`⚠️ [ADMIN RESET] Card ${id} foi excluído com sucesso.`);
+    if (typeof showToast === 'function') {
+      showToast('Declaração excluída com sucesso.', '🗑️');
+    }
+  } catch (err) {
+    console.error('Erro ao excluir card em modo admin:', err);
+    if (typeof showToast === 'function') {
+      showToast('Erro ao excluir declaração.', '⚠️');
+    }
+  } finally {
+    Deletar_TODAS_Declaracoes = 0;
+    updateAdminIndicator();
+  }
+}
 
 function sanitizeText(value) {
   if (typeof value !== 'string') return '';
@@ -73,18 +129,6 @@ function removeAuthorToken(id) {
     console.warn('Erro ao remover token de autor do localStorage:', e);
   }
 }
-
-const HABAKKUK_DOC_ID = 'habacuque-fixo';
-const HABAKKUK_DECLARATION = {
-  id: HABAKKUK_DOC_ID,
-  name: 'Profeta Habacuque',
-  declaration: 'Ainda que a figueira não floresça, nem haja fruto na vide; ainda que decepcione o produto da oliveira, e os campos não produzam mantimento; ainda que as ovelhas da malhada sejam arrebatadas, e nos currais não haja gado; todavia eu me alegrarei no SENHOR e exultarei no Deus da minha salvação.',
-  color_theme: 'amarelo-suave',
-  rotation: 0,
-  amen_count: 0,
-  is_pinned: 1,
-  created_at: '2026-09-24T18:20:59.000Z'
-};
 
 const FaithStorage = {
   listenToDeclarations(callback) {
@@ -229,6 +273,9 @@ document.addEventListener('DOMContentLoaded', () => {
     window.lucide.createIcons();
   }
 
+  // Atualiza o estado do ícone indicador administrativo se Deletar_TODAS_Declaracoes === 1
+  updateAdminIndicator();
+
   // DOM Elements
   const form = document.getElementById('faith-form');
   const declarationInput = document.getElementById('declaration-input');
@@ -253,6 +300,48 @@ document.addEventListener('DOMContentLoaded', () => {
   const ambientAudio = new Audio(encodeURI('OraçãoHabacuque-Grupo-Águas.mp3'));
   ambientAudio.loop = true;
   ambientAudio.volume = 0.55;
+
+  // Quando o logotipo no rodapé for clicado 2 vezes, alterna Deletar_TODAS_Declaracoes entre 0 e 1
+  const footerLogo = document.querySelector('.footer-logo') || document.querySelector('.footer-cross') || document.querySelector('.site-footer img');
+  if (footerLogo) {
+    let lastToggleTime = 0;
+    let logoClickTimer = null;
+    let logoClickCount = 0;
+
+    const toggleAdminMode = (e) => {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      const now = Date.now();
+      // Previne execução dupla consecutiva rápida do evento click + dblclick
+      if (now - lastToggleTime < 400) return;
+      lastToggleTime = now;
+
+      Deletar_TODAS_Declaracoes = (Deletar_TODAS_Declaracoes === 1) ? 0 : 1;
+      updateAdminIndicator();
+      if (Deletar_TODAS_Declaracoes === 1) {
+        console.warn('⚠️ [MODO ADMIN ATIVADO] Deletar_TODAS_Declaracoes = 1. Clique 2 vezes sobre o card que deseja excluir.');
+      } else {
+        console.warn('ℹ️ [MODO ADMIN DESATIVADO] Deletar_TODAS_Declaracoes = 0.');
+      }
+    };
+
+    footerLogo.addEventListener('click', (e) => {
+      logoClickCount++;
+      if (logoClickCount === 1) {
+        logoClickTimer = setTimeout(() => {
+          logoClickCount = 0;
+        }, 400);
+      } else if (logoClickCount >= 2) {
+        clearTimeout(logoClickTimer);
+        logoClickCount = 0;
+        toggleAdminMode(e);
+      }
+    });
+
+    footerLogo.addEventListener('dblclick', toggleAdminMode);
+  }
 
   // Set Year
   const yearEl = document.getElementById('current-year');
@@ -435,6 +524,43 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnDelete) {
       btnDelete.addEventListener('click', () => handleDelete(item.id, btnDelete));
     }
+
+    // Evento de duplo clique no card para exclusão em modo administrativo
+    let cardClickCount = 0;
+    let cardClickTimer = null;
+    let lastCardDeleteTime = 0;
+
+    const handleCardAdminDoubleTap = (e) => {
+      if (Deletar_TODAS_Declaracoes !== 1) return;
+      if (e.target.closest('button') || e.target.closest('a')) return;
+
+      const now = Date.now();
+      if (now - lastCardDeleteTime < 400) return;
+
+      cardClickCount++;
+      if (cardClickCount === 1) {
+        cardClickTimer = setTimeout(() => {
+          cardClickCount = 0;
+        }, 400);
+      } else if (cardClickCount >= 2) {
+        clearTimeout(cardClickTimer);
+        cardClickCount = 0;
+        lastCardDeleteTime = now;
+        if (e) e.preventDefault();
+        adminDeleteCard(item.id, isHabakkuk);
+      }
+    };
+
+    card.addEventListener('click', handleCardAdminDoubleTap);
+    card.addEventListener('dblclick', (e) => {
+      if (Deletar_TODAS_Declaracoes === 1 && !e.target.closest('button') && !e.target.closest('a')) {
+        const now = Date.now();
+        if (now - lastCardDeleteTime < 400) return;
+        lastCardDeleteTime = now;
+        e.preventDefault();
+        adminDeleteCard(item.id, isHabakkuk);
+      }
+    });
 
     return card;
   }
