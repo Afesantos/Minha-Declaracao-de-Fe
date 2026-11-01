@@ -1833,7 +1833,7 @@ textarea:focus-visible, select:focus-visible {
   color: #8b6a32;
   letter-spacing: 0.08em;
   text-align: center;
-  font-size: 0.75rem;
+  font-size: clamp(0.35rem, 1.2vw, 0.42rem);
 }
 .header-actions { gap: .55rem; }
 .header-nav-link, .header-nav-cta {
