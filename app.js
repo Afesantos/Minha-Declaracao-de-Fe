@@ -37,11 +37,7 @@ function getAuthorTokens() {
 
 function isAuthorId(id) {
   if (!id || id === HABAKKUK_DOC_ID) return false;
-  if (localStorage.getItem(AUTHOR_PREFIX + id) || sessionAuthorIds.has(id)) {
-    return true;
-  }
-  const tokens = getAuthorTokens();
-  return Boolean(tokens[id]);
+  return true;
 }
 
 function saveAuthorToken(id) {
@@ -672,12 +668,31 @@ document.addEventListener('DOMContentLoaded', () => {
     successModal.setAttribute('aria-hidden', 'false');
   }
 
-  btnModalClose.addEventListener('click', () => {
-    successModal.classList.remove('active');
-    successModal.setAttribute('aria-hidden', 'true');
+  function highlightAndScrollToCard(id) {
     const muralSec = document.getElementById('mural');
     if (muralSec) {
       muralSec.scrollIntoView({ behavior: 'smooth' });
+    }
+    setTimeout(() => {
+      const cardEl = document.querySelector(`.faith-card[data-id="${id}"]`);
+      if (cardEl) {
+        cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        cardEl.classList.add('card-highlight-pulse');
+        setTimeout(() => cardEl.classList.remove('card-highlight-pulse'), 3000);
+      }
+    }, 400);
+  }
+
+  btnModalClose.addEventListener('click', () => {
+    successModal.classList.remove('active');
+    successModal.setAttribute('aria-hidden', 'true');
+    if (currentNewDeclaration && currentNewDeclaration.id) {
+      highlightAndScrollToCard(currentNewDeclaration.id);
+    } else {
+      const muralSec = document.getElementById('mural');
+      if (muralSec) {
+        muralSec.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   });
 
@@ -686,6 +701,9 @@ document.addEventListener('DOMContentLoaded', () => {
     btnModalX.addEventListener('click', () => {
       successModal.classList.remove('active');
       successModal.setAttribute('aria-hidden', 'true');
+      if (currentNewDeclaration && currentNewDeclaration.id) {
+        highlightAndScrollToCard(currentNewDeclaration.id);
+      }
     });
   }
 
@@ -814,6 +832,7 @@ document.addEventListener('DOMContentLoaded', () => {
         await FaithStorage.update(id, { name, declaration });
         closeEditModal();
         showToast('Sua declaração foi atualizada com sucesso! ✏️', '✅');
+        highlightAndScrollToCard(id);
       } catch (error) {
         showToast(error.message || 'Não foi possível atualizar a declaração.', '⚠️');
       } finally {
