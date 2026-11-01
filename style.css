@@ -1825,7 +1825,7 @@ textarea:focus-visible, select:focus-visible {
   font-weight: 700;
   color: #102c46;
   letter-spacing: 0.08em;
-  font-size: clamp(0.95rem, 3.2vw, 1.75rem);
+  font-size: clamp(1.9rem, 6.4vw, 3.5rem);
   text-align: center;
   width: 100%;
 }
