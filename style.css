@@ -1193,13 +1193,19 @@ input[type="text"]#name-input:focus {
   word-break: break-word;
 }
 
+.card-footer-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  padding-top: 1rem;
+  margin-top: auto;
+}
+
 .card-footer-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-top: 1px solid rgba(0, 0, 0, 0.06);
-  padding-top: 1rem;
-  margin-top: auto;
 }
 
 .card-author-info {
@@ -1242,6 +1248,7 @@ input[type="text"]#name-input:focus {
 .card-actions-group {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 0.4rem;
 }
 
