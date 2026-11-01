@@ -273,6 +273,13 @@ document.addEventListener('DOMContentLoaded', () => {
     window.lucide.createIcons();
   }
 
+  // Registro do Service Worker para suporte completo PWA no Android/iOS
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js').catch((err) => {
+      console.warn('Registro do Service Worker:', err);
+    });
+  }
+
   // Atualiza o estado do ícone indicador administrativo se Deletar_TODAS_Declaracoes === 1
   updateAdminIndicator();
 
@@ -341,6 +348,50 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     footerLogo.addEventListener('dblclick', toggleAdminMode);
+  }
+
+  // PWA Install Handler
+  let deferredInstallPrompt = null;
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredInstallPrompt = e;
+  });
+
+  window.addEventListener('appinstalled', () => {
+    deferredInstallPrompt = null;
+    if (typeof showToast === 'function') {
+      showToast('Aplicativo instalado com sucesso! 🎉', '📲');
+    }
+  });
+
+  const btnInstallApp = document.getElementById('btn-install-app');
+  if (btnInstallApp) {
+    btnInstallApp.addEventListener('click', async (e) => {
+      e.preventDefault();
+
+      const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+      if (isStandalone) {
+        showToast('O aplicativo já está instalado no seu dispositivo! 📲', 'ℹ️');
+        return;
+      }
+
+      if (deferredInstallPrompt) {
+        deferredInstallPrompt.prompt();
+        const { outcome } = await deferredInstallPrompt.userChoice;
+        if (outcome === 'accepted') {
+          showToast('Instalação iniciada! 📲', '✅');
+        }
+        deferredInstallPrompt = null;
+      } else {
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        if (isIOS) {
+          showToast('No iOS: toque no botão Compartilhar e escolha "Adicionar à Tela de Início" 📲', 'ℹ️');
+        } else {
+          showToast('Para instalar: toque no menu do seu navegador (⋮) e escolha "Instalar aplicativo" ou "Adicionar à tela inicial" 📲', 'ℹ️');
+        }
+      }
+    });
   }
 
   // Set Year
@@ -484,20 +535,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
       <p class="card-body-text ${isHabakkuk ? 'text-habacuque' : ''}">${item.declaration}</p>
 
-      <div class="card-footer-row">
-        <div class="card-author-info">
-          <div class="card-avatar-initials ${isHabakkuk ? 'avatar-habacuque' : ''}">${initials}</div>
-          <div class="card-author-meta">
-            <span class="card-author-name" title="${item.name}">${displayName}</span>
-            <span class="card-date">${dateFormatted}</span>
+      <div class="card-footer-container">
+        <div class="card-footer-row">
+          <div class="card-author-info">
+            <div class="card-avatar-initials ${isHabakkuk ? 'avatar-habacuque' : ''}">${initials}</div>
+            <div class="card-author-meta">
+              <span class="card-author-name" title="${item.name}">${displayName}</span>
+              <span class="card-date">${dateFormatted}</span>
+            </div>
           </div>
-        </div>
 
-        <div class="card-actions-group">
           <button class="btn-amen ${isHabakkuk ? 'btn-amen-habacuque' : ''}" data-id="${item.id}" title="Dizer Amém a esta declaração">
             <span class="amen-heart">🙏</span>
             <span class="amen-count">${item.amen_count || 0}</span>
           </button>
+        </div>
+
+        <div class="card-actions-group">
           <button class="btn-card-share" data-id="${item.id}" title="Compartilhar no WhatsApp">
             <i data-lucide="share-2"></i>
           </button>
