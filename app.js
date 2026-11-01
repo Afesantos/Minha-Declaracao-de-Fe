@@ -2,7 +2,7 @@
 // MINHA DECLARAÇÃO DE FÉ — CLIENT-SIDE JAVASCRIPT
 // =========================================================
 
-const AUTHOR_TOKENS_KEY = 'minha_profissao_de_fe_author_tokens';
+const AUTHOR_TOKENS_KEY = 'minha_declaracao_de_fe_author_tokens';
 
 function sanitizeText(value) {
   if (typeof value !== 'string') return '';
