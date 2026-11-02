@@ -427,6 +427,9 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   nameInput.addEventListener('input', () => {
+    if (nameInput.value.length > 30) {
+      nameInput.value = nameInput.value.substring(0, 30);
+    }
     clearError('name');
   });
 
@@ -766,7 +769,11 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
 
     const declaration = declarationInput.value.trim();
-    const name = nameInput.value.trim();
+    let name = nameInput.value.trim();
+    if (name.length > 30) {
+      name = name.substring(0, 30);
+      nameInput.value = name;
+    }
 
     let valid = true;
 
@@ -790,10 +797,6 @@ document.addEventListener('DOMContentLoaded', () => {
       valid = false;
     } else if (name.length < 2) {
       showError('name', 'O nome deve ter pelo menos 2 caracteres.');
-      if (valid) nameInput.focus();
-      valid = false;
-    } else if (name.length > 20) {
-      showError('name', 'O nome deve ter no máximo 20 caracteres.');
       if (valid) nameInput.focus();
       valid = false;
     }
@@ -988,6 +991,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (editNameInput) {
     editNameInput.addEventListener('input', () => {
+      if (editNameInput.value.length > 30) {
+        editNameInput.value = editNameInput.value.substring(0, 30);
+      }
       clearError('edit-name');
     });
   }
@@ -997,7 +1003,11 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       const id = editItemId.value;
       const declaration = editDeclarationInput.value.trim();
-      const name = editNameInput.value.trim();
+      let name = editNameInput.value.trim();
+      if (name.length > 30) {
+        name = name.substring(0, 30);
+        editNameInput.value = name;
+      }
 
       let valid = true;
 
@@ -1021,10 +1031,6 @@ document.addEventListener('DOMContentLoaded', () => {
         valid = false;
       } else if (name.length < 2) {
         showError('edit-name', 'O nome deve ter pelo menos 2 caracteres.');
-        if (valid) editNameInput.focus();
-        valid = false;
-      } else if (name.length > 20) {
-      showError('edit-name', 'O nome deve ter no máximo 20 caracteres.');
         if (valid) editNameInput.focus();
         valid = false;
       }
