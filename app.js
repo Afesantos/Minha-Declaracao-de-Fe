@@ -183,7 +183,7 @@ const FaithStorage = {
 
   async add({ name, declaration, color_theme }) {
     const { db, collection, doc, setDoc } = window.FirebaseDB;
-    const themes = ['amarelo-suave', 'azul-claro', 'verde-suave', 'coral'];
+    const themes = ['amarelo-suave', 'azul-claro', 'verde-suave', 'coral', 'gelo', 'creme'];
     const selectedTheme = themes.includes(color_theme) ? color_theme : themes[Math.floor(Math.random() * themes.length)];
 
     const newItem = {
@@ -405,6 +405,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'azul-claro': 'Celeste',
     'verde-suave': 'Esperança',
     'coral': 'Coral',
+    'gelo': 'Gelo',
     'lilas': 'Lilás',
     'azul-petroleo': 'Petróleo',
     'creme': 'Creme',
