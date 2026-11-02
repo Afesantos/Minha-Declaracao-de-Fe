@@ -275,7 +275,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Registro do Service Worker para suporte completo PWA no Android/iOS
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js').catch((err) => {
+    navigator.serviceWorker.register('./sw.js?v=2').catch((err) => {
       console.warn('Registro do Service Worker:', err);
     });
   }
