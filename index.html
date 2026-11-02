@@ -9,11 +9,11 @@
     content="Um mural coletivo de declarações de fé inspirado em Habacuque 3:17-18. Escreva sua declaração e seja encorajado pela fé de outros.">
 
   <!-- Favicon & PWA Icons -->
-  <link rel="icon" type="image/jpeg" sizes="32x32" href="icon.jpg">
-  <link rel="icon" type="image/jpeg" sizes="192x192" href="icon.jpg">
-  <link rel="icon" type="image/jpeg" sizes="512x512" href="icon.jpg">
-  <link rel="apple-touch-icon" sizes="180x180" href="icon.jpg">
-  <link rel="apple-touch-icon" href="icon.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="icone.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icone.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="icone.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="icone.png">
+  <link rel="apple-touch-icon" href="icone.png">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#102c46">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -99,10 +99,10 @@
     <section id="inicio" class="hero-section">
       <div class="container hero-container">
 
-        <div class="badge-tag animate-fade-in">
+        <div class="badge-tag animate-fade-in" style="border-radius: 16px; padding: 0.75rem 1.25rem; max-width: 880px; margin-inline: auto;">
           <span class="badge-sparkle">✨</span>
-          <span>PALAVRA DE ESPERANÇA & COMUNHÃO</span>
-          <span>Ministério 50+ PIBJI</span>
+          <span class="badge-welcome-text" style="font-size: 1.2rem; font-weight: 600; line-height: 1.5; color: #ffffff;">Bem-vindo(a), aqui você terá como tarefa escrever a sua Declaração de fé após ter estudado o livro de Habacuque!</span>
+          <span class="badge-ministry-tag" style="font-size: 0.95rem; font-weight: 700; color: #f0dfb7;">Ministério 50+ PIBJI</span>
         </div>
 
         <div class="hero-title-img animate-fade-in delay-1">
@@ -145,10 +145,16 @@
 
           <!-- Spotify Playlist Embed -->
           <div id="spotify-player" style="margin-top: 1.75rem;">
-            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem; font-weight: 700; color: #1db954; font-size: 0.92rem; text-transform: uppercase; letter-spacing: 0.05em;">
+            <div
+              style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem; font-weight: 700; color: #1db954; font-size: 0.92rem; text-transform: uppercase; letter-spacing: 0.05em;">
               <span>🎵</span> <span>Trilha Sonora & Louvores (Spotify)</span>
             </div>
-            <iframe data-testid="embed-iframe" style="border-radius:12px; border:1px solid rgba(29, 185, 84, 0.25); box-shadow: 0 4px 16px rgba(29, 185, 84, 0.1);" src="https://open.spotify.com/embed/playlist/29BnhUDGo5w3X2TBgdOk9y?utm_source=generator&theme=0&si=5d6423f7c7724760" width="100%" height="152" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            <iframe data-testid="embed-iframe"
+              style="border-radius:12px; border:1px solid rgba(29, 185, 84, 0.25); box-shadow: 0 4px 16px rgba(29, 185, 84, 0.1);"
+              src="https://open.spotify.com/embed/playlist/29BnhUDGo5w3X2TBgdOk9y?utm_source=generator&theme=0&si=5d6423f7c7724760"
+              width="100%" height="152" allowfullscreen=""
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"></iframe>
           </div>
 
           <div class="hero-question-box">
@@ -202,11 +208,11 @@
                 <label for="name-input" class="form-label">
                   <i data-lucide="user"></i> Seu nome <span class="required">*</span>
                 </label>
-                <span class="char-counter-name" id="name-counter">2 a 100 caracteres</span>
+                <span class="char-counter-name" id="name-counter">2 a 20 caracteres</span>
               </div>
               <div class="input-with-icon">
                 <i data-lucide="user-check" class="input-icon"></i>
-                <input type="text" id="name-input" name="name" minlength="2" maxlength="100"
+                <input type="text" id="name-input" name="name" minlength="2" maxlength="20"
                   placeholder="Digite seu nome (ou como deseja ser identificado)" required>
               </div>
               <div class="field-error" id="name-error"></div>
@@ -385,7 +391,8 @@
             </label>
             <span id="edit-char-counter" class="char-counter">0 / 1.000</span>
           </div>
-          <textarea id="edit-declaration-input" name="declaration" rows="4" maxlength="1000" required></textarea>
+          <textarea id="edit-declaration-input" name="declaration" rows="4" maxlength="1000"
+            style="width: 100%; box-sizing: border-box;" required></textarea>
           <div class="field-error" id="edit-declaration-error"></div>
         </div>
 
@@ -397,7 +404,7 @@
           </div>
           <div class="input-with-icon">
             <i data-lucide="user-check" class="input-icon"></i>
-            <input type="text" id="edit-name-input" name="name" minlength="2" maxlength="100" required>
+            <input type="text" id="edit-name-input" name="name" minlength="2" maxlength="20" required>
           </div>
           <div class="field-error" id="edit-name-error"></div>
         </div>
@@ -421,7 +428,8 @@
   <footer class="site-footer">
     <div class="container footer-content">
       <nav class="footer-nav-links" aria-label="Navegação do rodapé">
-        <a href="#inicio"><i data-lucide="shield-alert" id="admin-indicator-icon" class="admin-indicator-icon" style="display: none; margin-right: 4px; vertical-align: middle; width: 14px; height: 14px;"></i>Início</a>
+        <a href="#inicio"><i data-lucide="shield-alert" id="admin-indicator-icon" class="admin-indicator-icon"
+            style="display: none; margin-right: 4px; vertical-align: middle; width: 14px; height: 14px;"></i>Início</a>
         <span class="footer-nav-dot">•</span>
         <a href="#mural">Mural</a>
         <span class="footer-nav-dot">•</span>
@@ -431,7 +439,8 @@
       </nav>
 
       <div class="footer-install-row">
-        <a href="javascript:void(0)" id="btn-install-app" class="footer-install-link" title="Instalar aplicativo no seu celular ou computador">
+        <a href="javascript:void(0)" id="btn-install-app" class="footer-install-link"
+          title="Instalar aplicativo no seu celular ou computador">
           <i data-lucide="download" class="install-icon"></i> Instalar App
         </a>
       </div>

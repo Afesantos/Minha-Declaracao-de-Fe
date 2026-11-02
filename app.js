@@ -495,7 +495,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function truncateName(name, maxLength = 15) {
+  function truncateName(name, maxLength = 20) {
     if (!name) return '';
     const trimmed = name.trim();
     if (trimmed.length <= maxLength) return trimmed;
@@ -521,14 +521,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const initials = isHabakkuk ? 'HB' : getInitials(item.name);
     const dateFormatted = isHabakkuk ? 'Cerca de 620 a.C.' : formatDate(item.created_at);
     const canManage = !isHabakkuk && isAuthorId(item.id);
-    const displayName = isHabakkuk ? item.name : truncateName(item.name, 15);
+    const displayName = isHabakkuk ? item.name : truncateName(item.name, 20);
 
-    card.innerHTML = `
-      <div class="card-header-row">
-        <span class="card-tag ${isHabakkuk ? 'tag-inaugural' : ''}">
+        card.innerHTML = `
+      <div class="card-header-row ${isHabakkuk ? 'card-header-habacuque' : ''}" ${isHabakkuk ? 'style="display: flex; justify-content: center; align-items: center; width: 100%; text-align: center;"' : ''}>
+        <span class="card-tag ${isHabakkuk ? 'tag-inaugural' : ''}" ${isHabakkuk ? 'style="margin: 0 auto; text-align: center; justify-content: center; display: inline-flex;"' : ''}>
           <i data-lucide="${isHabakkuk ? 'crown' : 'sparkle'}"></i> ${themeLabel}
         </span>
-        <span class="card-decor-icon">${randomDecor}</span>
+        ${isHabakkuk ? '' : `<span class="card-decor-icon">${randomDecor}</span>`}
       </div>
 
       <div class="card-quote-icon">“</div>
@@ -785,8 +785,8 @@ document.addEventListener('DOMContentLoaded', () => {
       showError('name', 'O nome deve ter pelo menos 2 caracteres.');
       if (valid) nameInput.focus();
       valid = false;
-    } else if (name.length > 100) {
-      showError('name', 'O nome deve ter no máximo 100 caracteres.');
+    } else if (name.length > 20) {
+      showError('name', 'O nome deve ter no máximo 20 caracteres.');
       if (valid) nameInput.focus();
       valid = false;
     }
@@ -1016,8 +1016,8 @@ document.addEventListener('DOMContentLoaded', () => {
         showError('edit-name', 'O nome deve ter pelo menos 2 caracteres.');
         if (valid) editNameInput.focus();
         valid = false;
-      } else if (name.length > 100) {
-        showError('edit-name', 'O nome deve ter no máximo 100 caracteres.');
+      } else if (name.length > 20) {
+      showError('edit-name', 'O nome deve ter no máximo 20 caracteres.');
         if (valid) editNameInput.focus();
         valid = false;
       }

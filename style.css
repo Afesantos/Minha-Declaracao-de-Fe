@@ -1,4 +1,4 @@
-/* =========================================================
+﻿/* =========================================================
    MINHA DECLARAÇÃO DE FÉ — ESTILOS CSS
    Inspirado em Habacuque 3:17-18
    ========================================================= */
@@ -611,8 +611,11 @@ body {
   color: var(--color-text-subtle);
 }
 
-textarea#declaration-input {
-  width: 100%;
+textarea#declaration-input,
+textarea#edit-declaration-input,
+textarea {
+  width: 100% !important;
+  box-sizing: border-box !important;
   font-family: var(--font-sans);
   font-size: 1.05rem;
   line-height: 1.6;
@@ -626,7 +629,9 @@ textarea#declaration-input {
   transition: var(--transition-smooth);
 }
 
-textarea#declaration-input:focus {
+textarea#declaration-input:focus,
+textarea#edit-declaration-input:focus,
+textarea:focus {
   outline: none;
   background: #ffffff;
   border-color: #3b82f6;
@@ -1056,6 +1061,28 @@ input[type="text"]#name-input:focus {
   font-weight: 800;
   box-shadow: 0 2px 6px rgba(245, 158, 11, 0.2);
 }
+.faith-card.card-pinned-habacuque .card-header-row,
+.card-pinned-habacuque .card-header-row {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
+  width: 100% !important;
+}
+
+.faith-card.card-pinned-habacuque .card-tag.tag-inaugural,
+.card-pinned-habacuque .card-tag.tag-inaugural {
+  margin: 0 auto !important;
+  text-align: center !important;
+  justify-content: center !important;
+  display: inline-flex !important;
+}
+
+.faith-card.card-pinned-habacuque .card-decor-icon,
+.card-pinned-habacuque .card-decor-icon {
+  display: none !important;
+}
+
 
 .card-avatar-initials.avatar-habacuque {
   background: #fef3c7;
@@ -1479,7 +1506,8 @@ input[type="text"]#name-input:focus {
 }
 
 .modal-edit-card {
-  max-width: 580px;
+  width: 100%;
+  max-width: min(720px, calc(100vw - 2rem));
   overflow-y: auto;
 }
 
@@ -1925,9 +1953,27 @@ textarea:focus-visible, select:focus-visible {
   border: 1px solid rgba(212,181,116,.48);
   color: #f0dfb7;
   box-shadow: none;
-  padding: .5rem 1rem;
-  letter-spacing: .055em;
+  padding: .65rem 1.25rem;
+  letter-spacing: .03em;
   gap: .65rem;
+  border-radius: 16px;
+  max-width: 880px;
+  margin-inline: auto;
+  line-height: 1.5;
+}
+.badge-welcome-text {
+  font-size: clamp(1.08rem, 2.3vw, 1.24rem);
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 1.5;
+  letter-spacing: normal;
+}
+.badge-ministry-tag {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #f0dfb7;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
 }
 .badge-tag span:last-child {
   border-left: 1px solid rgba(240,223,183,.35);
@@ -2029,6 +2075,8 @@ textarea:focus-visible, select:focus-visible {
 .form-label { color:#243f53; font-weight:700; }
 .form-label svg, .form-label i { color:#8b6a32; }
 textarea, .input-with-icon input {
+  width: 100% !important;
+  box-sizing: border-box !important;
   border:1px solid #d7dfe2 !important; border-radius:13px !important;
   background:#fdfdfc !important; color:#243746 !important;
   padding: .95rem 1rem !important; box-shadow:none !important;
@@ -2053,10 +2101,8 @@ textarea:focus, .input-with-icon input:focus {
 
 /* Mural */
 .mural-section {
-  padding:4.5rem 0 5.5rem;
-  background:
-    radial-gradient(ellipse at 100% 0%,rgba(212,181,116,.12),transparent 30%),
-    #fbfaf7;
+  padding: 4.5rem 0 6rem;
+  background: linear-gradient(180deg, #eae2d2 0%, #d8cbbe 15%, #695d51 45%, #1f1b17 75%, #000000 100%);
 }
 .mural-header-container { margin-bottom:2rem; }
 .mural-title-badge { background:#edf3f6; border-color:#d7e3e9; color:#315a78; }
@@ -2133,7 +2179,9 @@ textarea:focus, .input-with-icon input:focus {
       radial-gradient(ellipse at 15% 0%,rgba(212,181,116,.15),transparent 38%),
       linear-gradient(180deg,#102c46 0%,#163b56 38%,#f7f5f0 38.1%,#f7f5f0 100%);
   }
-  .badge-tag { font-size:.66rem; letter-spacing:.035em; flex-wrap:wrap; justify-content:center; }
+  .badge-tag { font-size: 0.92rem; letter-spacing: 0.02em; flex-wrap: wrap; justify-content: center; }
+  .badge-welcome-text { font-size: 1.05rem; line-height: 1.45; }
+  .badge-ministry-tag { font-size: 0.85rem; border-left: 0; padding-left: 0; }
   .badge-tag span:last-child { border-left:0; padding-left:0; }
   .hero-title-img { width:min(100%,560px); margin:.25rem auto; }
   .hero-quote-highlight { margin:.35rem 0 1.45rem; line-height:1.5; }
