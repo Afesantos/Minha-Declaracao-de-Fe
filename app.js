@@ -482,15 +482,21 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!dateStr) return 'Recentemente';
     try {
       const date = new Date(dateStr);
-      const now = new Date();
-      const diffMs = now - date;
-      const diffMins = Math.floor(diffMs / 60000);
-      const diffHours = Math.floor(diffMins / 60);
+      const timeStr = date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
 
-      if (diffMins < 2) return 'Agora mesmo';
-      if (diffMins < 60) return `Há ${diffMins} min`;
-      if (diffHours < 24) return `Hoje às ${date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}`;
-      return date.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' });
+      const now = new Date();
+      const diffDays = Math.floor((now - date) / (1000 * 60 * 60 * 24));
+
+      if (diffDays === 0) {
+        return `Hoje às ${timeStr}`;
+      } else if (diffDays === 1) {
+        return `Ontem às ${timeStr}`;
+      } else {
+        return `${day}/${month}/${year} às ${timeStr}`;
+      }
     } catch (e) {
       return 'Recentemente';
     }
