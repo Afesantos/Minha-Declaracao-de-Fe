@@ -479,8 +479,8 @@ body {
 }
 
 .question-main {
-  font-family: var(--font-serif);
-  font-size: 1.65rem;
+  font-family: var(--font-sans);
+  font-size: 1.5rem;
   font-weight: 700;
   color: #ffffff;
 }
@@ -2038,7 +2038,7 @@ textarea:focus-visible, select:focus-visible {
   box-shadow: 0 12px 28px rgba(16,44,70,.13);
 }
 .question-pre { color: #d4b574; letter-spacing: .08em; }
-.question-main { font-size: clamp(1.35rem, 3vw, 1.8rem); line-height: 1.35; }
+.question-main { font-family: var(--font-sans); font-size: clamp(1.15rem, 3.2vw, 1.5rem); line-height: 1.35; }
 .hero-actions { display:flex; flex-wrap:wrap; justify-content:center; gap:.75rem; margin: 1.2rem 0 .2rem; }
 .hero-primary-link, .hero-secondary-link {
   display:inline-flex; align-items:center; justify-content:center; gap:.55rem;
