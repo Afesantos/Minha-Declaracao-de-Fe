@@ -8,7 +8,7 @@
   <meta name="description"
     content="Um mural coletivo de declarações de fé inspirado em Habacuque 3:17-18. Escreva sua declaração e seja encorajado pela fé de outros.">
 
-    <!-- Favicon & PWA Icons -->
+  <!-- Favicon & PWA Icons -->
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
   <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
@@ -99,10 +99,14 @@
     <section id="inicio" class="hero-section">
       <div class="container hero-container">
 
-        <div class="badge-tag animate-fade-in" style="border-radius: 16px; padding: 0.75rem 1.25rem; max-width: 880px; margin-inline: auto;">
+        <div class="badge-tag animate-fade-in"
+          style="border-radius: 16px; padding: 0.75rem 1.25rem; max-width: 880px; margin-inline: auto;">
           <span class="badge-sparkle">✨</span>
-          <span class="badge-welcome-text" style="font-size: 1.2rem; font-weight: 600; line-height: 1.5; color: #ffffff;">Bem-vindo(a), aqui você terá como tarefa escrever a sua Declaração de fé após ter estudado o livro de Habacuque!</span>
-          <span class="badge-ministry-tag" style="font-size: 0.95rem; font-weight: 700; color: #f0dfb7;">Ministério 50+ PIBJI</span>
+          <span class="badge-welcome-text"
+            style="font-size: 1.2rem; font-weight: 600; line-height: 1.5; color: #ffffff;">Bem-vindo(a), aqui você terá
+            como tarefa escrever a sua Declaração de fé após ter estudado o livro de Habacuque!</span>
+          <span class="badge-ministry-tag" style="font-size: 0.95rem; font-weight: 700; color: #f0dfb7;">Ministério 50+
+            PIBJI</span>
         </div>
 
         <div class="hero-title-img animate-fade-in delay-1">
@@ -144,33 +148,37 @@
           </div>
 
           <!-- Spotify Playlist Embed -->
-          <div id="spotify-player" style="margin-top: 1.75rem; text-align: center; background: linear-gradient(135deg, rgba(29, 185, 84, 0.12) 0%, rgba(16, 44, 70, 0.04) 100%); border: 2px solid #1db954; border-radius: 20px; padding: 1.25rem; box-shadow: 0 12px 35px rgba(29, 185, 84, 0.22);">
-            <div
-              style="display: flex; align-items: center; justify-content: center; text-align: center; gap: 0.5rem; margin-bottom: 0.75rem; font-weight: 700; color: #1db954; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.05em; width: 100%; margin-left: auto; margin-right: auto;">
-              <span>🎵</span> <span>Trilha Sonora & Louvores (Spotify)</span>
-            </div>
 
-            <div id="spotify-equalizer" style="display: none; align-items: center; justify-content: center; gap: 4px; margin-bottom: 0.85rem; height: 24px; cursor: pointer;" title="Clique para pausar/retomar animação">
-              <span class="eq-bar"></span>
-              <span class="eq-bar"></span>
-              <span class="eq-bar"></span>
-              <span class="eq-bar"></span>
-              <span class="eq-bar"></span>
-              <span id="eq-status-text" style="font-size: 0.8rem; font-weight: 600; color: #1db954; margin-left: 6px;">Trilha Sonora Tocando 🎵</span>
-            </div>
-
-            <iframe data-testid="embed-iframe"
-              style="border-radius:12px; border:2px solid #1db954; box-shadow: 0 6px 20px rgba(29, 185, 84, 0.25);"
-              src="https://open.spotify.com/embed/playlist/29BnhUDGo5w3X2TBgdOk9y?utm_source=generator&theme=0&si=5d6423f7c7724760"
-              width="100%" height="152" allowfullscreen=""
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-              loading="eager"></iframe>
-          </div>
-
-
-
-
+          style="display: flex; align-items: center; justify-content: center; text-align: center; gap: 0.5rem;
+          margin-bottom: 0.75rem; font-weight: 700; color: #1db954; font-size: 0.95rem; text-transform: uppercase;
+          letter-spacing: 0.05em; width: 100%; margin-left: auto; margin-right: auto;">
+          <span>🎵</span> <span>Louvores com tema em Habacuque</span>
         </div>
+
+        <div id="spotify-equalizer"
+          style="display: none; align-items: center; justify-content: center; gap: 4px; margin-bottom: 0.85rem; height: 24px; cursor: pointer;"
+          title="Clique para pausar/retomar animação">
+          <span class="eq-bar"></span>
+          <span class="eq-bar"></span>
+          <span class="eq-bar"></span>
+          <span class="eq-bar"></span>
+          <span class="eq-bar"></span>
+          <span id="eq-status-text"
+            style="font-size: 0.8rem; font-weight: 600; color: #1db954; margin-left: 6px;">Trilha Sonora Tocando
+            🎵</span>
+        </div>
+
+        <iframe data-testid="embed-iframe"
+          style="border-radius:12px; border:2px solid #1db954; box-shadow: 0 6px 20px rgba(29, 185, 84, 0.25);"
+          src="https://open.spotify.com/embed/playlist/29BnhUDGo5w3X2TBgdOk9y?utm_source=generator&theme=0&si=5d6423f7c7724760"
+          width="100%" height="152" allowfullscreen=""
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="eager"></iframe>
+
+
+
+
+
+      </div>
 
       </div>
     </section>
@@ -450,7 +458,8 @@
   </footer>
 
   <!-- CARD LIGHTBOX MODAL -->
-  <div id="card-lightbox-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-hidden="true" style="display: none;">
+  <div id="card-lightbox-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-hidden="true"
+    style="display: none;">
     <div class="modal-card modal-lightbox-card" style="max-width: 520px; width: 92%;">
       <button id="btn-lightbox-x" class="modal-close-x" aria-label="Fechar modal" title="Fechar">
         <i data-lucide="x"></i>
