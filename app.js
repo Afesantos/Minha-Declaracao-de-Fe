@@ -1213,4 +1213,26 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  // SPOTIFY EQUALIZER TOGGLE
+  const spotifyEqualizerEl = document.getElementById('spotify-equalizer');
+  const eqStatusTextEl = document.getElementById('eq-status-text');
+  let isEqAnimating = true;
+
+  if (spotifyEqualizerEl) {
+    spotifyEqualizerEl.addEventListener('click', () => {
+      isEqAnimating = !isEqAnimating;
+      const bars = spotifyEqualizerEl.querySelectorAll('.eq-bar');
+      bars.forEach(bar => {
+        if (isEqAnimating) {
+          bar.classList.remove('paused');
+        } else {
+          bar.classList.add('paused');
+        }
+      });
+      if (eqStatusTextEl) {
+        eqStatusTextEl.textContent = isEqAnimating ? 'Trilha Sonora Tocando 🎵' : 'Trilha Sonora Pausada ⏸️';
+      }
+    });
+  }
 });
