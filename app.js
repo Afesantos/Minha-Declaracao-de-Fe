@@ -1104,9 +1104,17 @@ document.addEventListener('DOMContentLoaded', () => {
     window.speechSynthesis.speak(utterance);
   });
 
+  const spotifyEqualizer = document.getElementById('spotify-equalizer');
+  function updateSpotifyEqualizer(playing) {
+    if (spotifyEqualizer) {
+      spotifyEqualizer.style.display = playing ? 'flex' : 'none';
+    }
+  }
+
   // Eventos do áudio da Oração de Habacuque
   ambientAudio.addEventListener('ended', () => {
     isAmbientPlaying = false;
+    updateSpotifyEqualizer(false);
     btnAmbientSound.classList.remove('active');
     btnAmbientSound.innerHTML = `<i data-lucide="volume-2"></i> <span class="sound-label">Oração de Habacuque</span>`;
     btnAmbientSound.setAttribute('title', 'Tocar Oração de Habacuque');
@@ -1117,6 +1125,7 @@ document.addEventListener('DOMContentLoaded', () => {
     console.warn('Erro ao carregar o áudio:', e);
     showToast('Não foi possível carregar o arquivo de áudio.', '⚠️');
     isAmbientPlaying = false;
+    updateSpotifyEqualizer(false);
     btnAmbientSound.classList.remove('active');
     btnAmbientSound.innerHTML = `<i data-lucide="volume-2"></i> <span class="sound-label">Oração de Habacuque</span>`;
     btnAmbientSound.setAttribute('title', 'Tocar Oração de Habacuque');
@@ -1127,6 +1136,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!isAmbientPlaying) {
       ambientAudio.play().then(() => {
         isAmbientPlaying = true;
+        updateSpotifyEqualizer(true);
         btnAmbientSound.classList.add('active');
         btnAmbientSound.innerHTML = `<i data-lucide="volume-x"></i> <span class="sound-label">Pausar Música</span>`;
         btnAmbientSound.setAttribute('title', 'Pausar Oração de Habacuque');
@@ -1139,6 +1149,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       ambientAudio.pause();
       isAmbientPlaying = false;
+      updateSpotifyEqualizer(false);
       btnAmbientSound.classList.remove('active');
       btnAmbientSound.innerHTML = `<i data-lucide="volume-2"></i> <span class="sound-label">Oração de Habacuque</span>`;
       btnAmbientSound.setAttribute('title', 'Tocar Oração de Habacuque');
