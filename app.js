@@ -527,7 +527,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ? item.id
       : Math.abs(String(item.id || '').split('').reduce((acc, c) => acc + c.charCodeAt(0), 0));
     const randomDecor = isHabakkuk ? '📜' : DECOR_ICONS[iconIndex % DECOR_ICONS.length];
-    const themeLabel = isHabakkuk ? '🌟 DECLARAÇÃO DE FÉ DE HABACUQUE' : 'Ministério 50+ 2026';
+    const themeLabel = isHabakkuk ? '🌟 Declaração de fé de HABACUQUE' : 'Ministério 50+ 2026';
     const initials = isHabakkuk ? 'HB' : getInitials(item.name);
     const dateFormatted = isHabakkuk ? 'Cerca de 620 a.C.' : formatDate(item.created_at);
     const canManage = !isHabakkuk && isAuthorId(item.id);

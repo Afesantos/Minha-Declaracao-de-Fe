@@ -2017,7 +2017,7 @@ textarea:focus-visible, select:focus-visible {
   border-left: 3px solid #d4b574;
   padding: .3rem 0 .3rem 1.25rem;
 }
-.biblical-text strong { color: #102c46; }
+.biblical-text strong { color: #991b1b !important; background: rgba(254, 226, 226, 0.85); padding: 0 4px; border-radius: 4px; }
 .scripture-divider { background: #e9e1d3; margin: 1.6rem 0; }
 .hero-intro-text { color: #4e606c; line-height: 1.85; }
 .hero-intro-text strong { color: #102c46; }
