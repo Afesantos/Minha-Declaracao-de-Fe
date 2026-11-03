@@ -615,7 +615,15 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     };
 
-    card.addEventListener('click', handleCardAdminDoubleTap);
+    card.addEventListener('click', (e) => {
+      if (Deletar_TODAS_Declaracoes === 1) {
+        handleCardAdminDoubleTap(e);
+        return;
+      }
+      if (e.target.closest('button') || e.target.closest('a')) return;
+      openLightboxModal(item);
+    });
+
     card.addEventListener('dblclick', (e) => {
       if (Deletar_TODAS_Declaracoes === 1 && !e.target.closest('button') && !e.target.closest('a')) {
         const now = Date.now();
@@ -641,8 +649,10 @@ document.addEventListener('DOMContentLoaded', () => {
     emptyState.style.display = 'none';
     muralGrid.style.display = 'grid';
 
-    declarations.forEach(item => {
+    declarations.forEach((item, index) => {
       const cardEl = createCardElement(item);
+      cardEl.style.animationDelay = `${Math.min(index * 0.05, 0.45)}s`;
+      cardEl.classList.add('card-stagger-fade');
       muralGrid.appendChild(cardEl);
     });
 
@@ -1150,4 +1160,46 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => highlightAndScrollToCard(targetId), 400);
     }
   });
+
+  // LIGHTBOX MODAL FOR CARDS
+  const cardLightboxModal = document.getElementById('card-lightbox-modal');
+  const btnLightboxX = document.getElementById('btn-lightbox-x');
+  const lightboxCardContainer = document.getElementById('lightbox-card-container');
+  const btnLightboxShare = document.getElementById('btn-lightbox-share');
+
+  let currentLightboxItem = null;
+
+  function openLightboxModal(item) {
+    if (!cardLightboxModal || !lightboxCardContainer) return;
+    currentLightboxItem = item;
+    lightboxCardContainer.innerHTML = '';
+    const previewEl = createCardElement(item, false);
+    previewEl.style.transform = 'none';
+    lightboxCardContainer.appendChild(previewEl);
+
+    cardLightboxModal.style.display = 'flex';
+    cardLightboxModal.setAttribute('aria-hidden', 'false');
+    if (window.lucide) window.lucide.createIcons();
+  }
+
+  function closeLightboxModal() {
+    if (!cardLightboxModal) return;
+    cardLightboxModal.style.display = 'none';
+    cardLightboxModal.setAttribute('aria-hidden', 'true');
+    currentLightboxItem = null;
+  }
+
+  if (btnLightboxX) btnLightboxX.addEventListener('click', closeLightboxModal);
+  if (cardLightboxModal) {
+    cardLightboxModal.addEventListener('click', (e) => {
+      if (e.target === cardLightboxModal) closeLightboxModal();
+    });
+  }
+  if (btnLightboxShare) {
+    btnLightboxShare.addEventListener('click', () => {
+      if (currentLightboxItem) {
+        handleShare(currentLightboxItem);
+      }
+    });
+  }
 });
